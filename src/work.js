@@ -1,8 +1,10 @@
 import React from 'react'
 
-const Work = () => <h1>Hello React.</h1>
-export default Work
+const Clock = () => <h1>{(new Date()).toLocaleTimeString()}.</h1>
+const Greet = () => <h1>OK Google</h1>
+
+export { Clock, Greet }
 
 /** Work
-ReactDOM.render() を使用して、複数のDOMにReactコンポーネントをレンダリング(マッピング)して下さい。
+自分自身で自由にコンポーネントを作成して、DOMにレンダリングして下さい。
 */
