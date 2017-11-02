@@ -21,16 +21,10 @@ ReactDOM.render(
 
 /** Work
 
-1 Clockコンポーネントのconstructorメソッドを削除したうえで、同じ表示になるようにして下さい
+2 Clockコンポーネントを、関数形式に書き変えて下さい
 
 */
 
-class Clock extends React.Component {
-  render() {
-    return (
-      <h1>{this.props.time}.</h1>
-    )
-  }
-}
+const Clock = ({ time }) => <h1>{time}.</h1>
 
 export default Clock
