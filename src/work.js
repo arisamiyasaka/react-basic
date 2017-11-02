@@ -53,7 +53,7 @@ class Clock extends React.Component {
   }
 
   tick() {
-    this.setState({ time: new Date(), active: !this.state.active })
+    this.setState(({ active }) => ({ time: new Date(), active: !active }))
   }
 
   render() {
