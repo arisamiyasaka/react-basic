@@ -1,8 +1,10 @@
 import React from 'react'
 
 /* From CodePen by sundaycrafts
-コンポーネント自身がデータを保持・更新するにはstateを使います。
-stateは React.Component を extends した時のみもつことができることを理解して下さい。
+Reactコンポーネントには「DOMにレンダリングされた瞬間」や「DOMから取り除かれた瞬間」
+という、特定のタイミングで呼び出されるメソッドがあり、それを「Lifecycle method」と呼びます。
+componentDidMount() と componentWillUnMount() はそれぞれコンポーネントがDOMにレンダリングされた時、
+DOMから取り除かれた時に呼び出されるLifecycle methodであることを理解して下さい。
 
 class Clock extends React.Component {
   constructor (props) {
@@ -10,35 +12,55 @@ class Clock extends React.Component {
     this.state = {time: new Date()}
   }
 
+  componentDidMount () {
+    this.timerID = setInterval(() => this.tick(), 1000)
+  }
+
+  componentWillUnMount () {
+    clearInterval(this.timerID)
+  }
+
+  tick () {
+    this.setState({time: new Date()})
+  }
+
   render () {
     return (
-      <h1>{this.state.time.toLocaleTimeString()}.</h1>
+      <h1 style={{color: 'grey'}}>{this.state.time.toLocaleTimeString()}.</h1>
     )
   }
 }
 
 */
 
-/** MEMO: state vs props
-stateはコンポーネント自身が自由に変更できるプロパティ、propsは親コンポーネントからしか変更できないプロパティです。
-親コンポーネントから子コンポーネントのpropsを変更する方法は後述します。
-*/
 
 /** Work
-
-stateを ReactDOM.render() からprops経由で渡すようにして下さい。
-
+1秒毎に色が black <-> grey と変わるようにして下さい
 */
 
 class Clock extends React.Component {
   constructor(props) {
     super(props)
-    // this.state = {time: new Date()}
+    this.state = { time: new Date(), active: true }
+  }
+
+  componentDidMount() {
+    this.timerID = setInterval(() => this.tick(), 1000)
+  }
+
+  componentWillUnMount() {
+    clearInterval(this.timerID)
+  }
+
+  tick() {
+    this.setState((prevState) => {
+      return { time: new Date(), active: !prevState.active }
+    })
   }
 
   render() {
     return (
-      <h1>{this.props.time}.</h1>
+      <h1 style={{ color: this.state.active ? 'grey' : 'black' }}>{this.state.time.toLocaleTimeString()}.</h1>
     )
   }
 }
