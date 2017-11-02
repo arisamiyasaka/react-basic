@@ -1,14 +1,36 @@
 import React from 'react'
 
-const Clock = ({ time }) => {
-  console.log("hello")
-  return (
-    <h1>{time}.</h1>
-  )
+/* From CodePen by sundaycrafts
+class Clock extends React.Component {
+  constructor (props) {
+    super(props)
+  }
+
+  render () {
+    return (
+      <h1>{this.props.time}.</h1>
+    )
+  }
 }
-export default Clock
+
+ReactDOM.render(
+  <Clock time={(new Date()).toLocaleTimeString()} />,
+  document.getElementById('root')
+)
+*/
 
 /** Work
-• timeというpropsの名前を自由に変更してみて下さい。
-• Clockのアロー関数を、より簡単に表記して下さい。
+
+1 Clockコンポーネントのconstructorメソッドを削除したうえで、同じ表示になるようにして下さい
+
 */
+
+class Clock extends React.Component {
+  render() {
+    return (
+      <h1>{this.props.time}.</h1>
+    )
+  }
+}
+
+export default Clock
