@@ -1,66 +1,30 @@
 import React from 'react'
 
 /* From CodePen by sundaycrafts
-Reactコンポーネントには「DOMにレンダリングされた瞬間」や「DOMから取り除かれた瞬間」
-という、特定のタイミングで呼び出されるメソッドがあり、それを「Lifecycle method」と呼びます。
-componentDidMount() と componentWillUnMount() はそれぞれコンポーネントがDOMにレンダリングされた時、
-DOMから取り除かれた時に呼び出されるLifecycle methodであることを理解して下さい。
+コンポーネントは、その内部にさらに子コンポーネントをもつことができることを理解して下さい。
 
-class Clock extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {time: new Date()}
-  }
+const Root = () => (
+  <div>
+    <h1>Hello React.</h1>
+    <Clock />
+  </div>
+)
 
-  componentDidMount () {
-    this.timerID = setInterval(() => this.tick(), 1000)
-  }
-
-  componentWillUnMount () {
-    clearInterval(this.timerID)
-  }
-
-  tick () {
-    this.setState({time: new Date()})
-  }
-
-  render () {
-    return (
-      <h1 style={{color: 'grey'}}>{this.state.time.toLocaleTimeString()}.</h1>
-    )
-  }
-}
+const Clock = () => <h1>{(new Date()).toLocaleTimeString()}.</h1>
 
 */
-
 
 /** Work
-1秒毎に色が black <-> grey と変わるようにして下さい
+1. 現在時刻を ReactDOM.render() から渡すようにして、最終的にClockコンポーネントで描画するようにして下さい。
 */
 
-class Clock extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { time: new Date(), active: true }
-  }
+const Root = (props) => (
+  <div>
+    <h1>Hello React.</h1>
+    <Clock time={props.time} />
+  </div>
+)
 
-  componentDidMount() {
-    this.timerID = setInterval(() => this.tick(), 1000)
-  }
+const Clock = ({ time }) => <h1>{time}.</h1>
 
-  componentWillUnMount() {
-    clearInterval(this.timerID)
-  }
-
-  tick() {
-    this.setState(({ active }) => ({ time: new Date(), active: !active }))
-  }
-
-  render() {
-    return (
-      <h1 style={{ color: this.state.active ? 'grey' : 'black' }}>{this.state.time.toLocaleTimeString()}.</h1>
-    )
-  }
-}
-
-export default Clock
+export default Root
