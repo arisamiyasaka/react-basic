@@ -4,5 +4,5 @@ import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import Work from './Work.js';
 
-ReactDOM.render(<Work time={(new Date()).toLocaleTimeString()} />, document.getElementById('work'));
+ReactDOM.render(<Work />, document.getElementById('work'));
 registerServiceWorker();
