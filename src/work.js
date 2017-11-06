@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 
 /* From CodePen by sundaycrafts
-コンポーネントは、その内部にさらに子コンポーネントをもつことができることを理解して下さい。
+React.render() 同様、コンポーネント自身も、どのような種類の
+コンポーネントでも子にもつことができることを確認してください。
 
 const Root = () => (
   <div>
@@ -10,44 +11,75 @@ const Root = () => (
   </div>
 )
 
-const Clock = () => <h1>{(new Date()).toLocaleTimeString()}.</h1>
-
-*/
-
-/** Work
-2. Clockコンポーネントが1秒ごとに時刻を更新するようにして下さい。
-*/
-
-class Root extends Component {
+class Clock extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { time: (new Date()).toLocaleTimeString(), active: true }
+    this.state = { time: new Date() }
   }
 
   componentDidMount() {
-    this.timeId = setInterval(() => this.tick(), 1000)
+    this.timerID = setInterval(() => this.tick(), 1000)
   }
 
-  componentWillMount() {
-    clearInterval(this.timeId)
+  componentWillUnMount() {
+    clearInterval(this.timerID)
   }
 
   tick() {
-    this.setState(({ active }) => ({ time: (new Date()).toLocaleTimeString(), active: !active }))
+    this.setState({ time: new Date() })
+  }
+
+  render() {
+    return (
+      <h1>{this.state.time.toLocaleTimeString()}.</h1>
+    )
+  }
+}
+*/
+
+
+/** Work
+Rootコンポーネントの <h1> エレメントの文字色が、3秒おきに変わるようにして下さい。
+*/
+
+const Root = () => (
+  <div>
+    <h1>Hello React.</h1>
+    <Clock />
+  </div>
+)
+
+class Clock extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { time: new Date(), active: true }
+  }
+
+  componentDidMount() {
+    this.timerID = setInterval(() => this.tick(), 1000)
+    this.tackID = setInterval(() => this.tack(), 3000)
+  }
+
+  componentWillUnMount() {
+    clearInterval(this.timerID)
+    clearInterval(this.tackID)
+  }
+
+  tick() {
+    this.setState({ time: new Date() })
+  }
+
+  tack() {
+    this.setState(({ active }) => ({ active: !active }))
   }
 
   render() {
     const { time, active } = this.state
-
     return (
-      < div >
-        <h1>Hello React.</h1>
-        <Clock time={time} color={active} />
-      </div >
+      <h1 style={{ color: active ? "black" : "gray" }}>{time.toLocaleTimeString()}.</h1>
     )
   }
 }
 
-const Clock = ({ time, color }) => <h1 style={{ color: color ? "black" : "grey" }}>{time}.</h1>
 
 export default Root
